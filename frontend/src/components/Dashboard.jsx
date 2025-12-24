@@ -12,6 +12,7 @@ const Dashboard = () => {
   const [recessions, setRecessions] = useState([]);
   const [error, setError] = useState(null);
   const [lastUpdate, setLastUpdate] = useState(null);
+  const [darkMode, setDarkMode] = useState(true);
 
   // Fetch all data on mount
   useEffect(() => {
@@ -71,7 +72,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="dashboard">
+    <div className={`dashboard ${darkMode ? '' : 'light-mode'}`}>
       {/* Header */}
       <header className="dashboard-header">
         <div>
@@ -86,6 +87,13 @@ const Dashboard = () => {
               Last updated: {lastUpdate.toLocaleTimeString()}
             </span>
           )}
+          <button 
+            onClick={() => setDarkMode(!darkMode)} 
+            className="theme-toggle-button"
+            title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          >
+            {darkMode ? '☀️' : '🌙'}
+          </button>
           <button onClick={fetchAllData} className="refresh-button" disabled={loading}>
             {loading ? '↻ Loading...' : '↻ Refresh'}
           </button>
@@ -186,65 +194,65 @@ const Dashboard = () => {
           height={450}
         />
 
-         {/* Combined Economic Indicators */}
-<TimeSeriesChart
-  data={(() => {
-    const unemploymentSeries = historicalData?.UNRATE;
-    const fedFundsSeries = historicalData?.FEDFUNDS;
-    
-    if (!unemploymentSeries?.data && !fedFundsSeries?.data) return [];
-    
-    // Create a map with all unique dates
-    const dateMap = new Map();
-    
-    // Add unemployment data
-    if (unemploymentSeries?.data) {
-      unemploymentSeries.data.forEach(point => {
-        const dateStr = point.date;
-        if (!dateMap.has(dateStr)) {
-          dateMap.set(dateStr, { date: dateStr });
-        }
-        dateMap.get(dateStr).unemployment = point.value;
-      });
-    }
-    
-    // Add fed funds data
-    if (fedFundsSeries?.data) {
-      fedFundsSeries.data.forEach(point => {
-        const dateStr = point.date;
-        if (!dateMap.has(dateStr)) {
-          dateMap.set(dateStr, { date: dateStr });
-        }
-        dateMap.get(dateStr).fedFunds = point.value;
-      });
-    }
-    
-    // Convert to array and sort by date
-    const combined = Array.from(dateMap.values()).sort((a, b) => 
-      new Date(a.date) - new Date(b.date)
-    );
-    
-    // Filter out entries with no data
-    return combined.filter(d => d.unemployment !== undefined || d.fedFunds !== undefined);
-  })()}
-  series={[
-    {
-      dataKey: 'unemployment',
-      name: 'Unemployment Rate (%)',
-      color: '#10b981',
-    },
-    {
-      dataKey: 'fedFunds',
-      name: 'Fed Funds Rate (%)',
-      color: '#f59e0b',
-    },
-  ]}
-  recessions={recessions}
-  title="Economic Indicators"
-  yAxisLabel="Rate (%)"
-  loading={loading}
-  height={450}
-/>
+        {/* Combined Economic Indicators */}
+        <TimeSeriesChart
+          data={(() => {
+            const unemploymentSeries = historicalData?.UNRATE;
+            const fedFundsSeries = historicalData?.FEDFUNDS;
+            
+            if (!unemploymentSeries?.data && !fedFundsSeries?.data) return [];
+            
+            // Create a map with all unique dates
+            const dateMap = new Map();
+            
+            // Add unemployment data
+            if (unemploymentSeries?.data) {
+              unemploymentSeries.data.forEach(point => {
+                const dateStr = point.date;
+                if (!dateMap.has(dateStr)) {
+                  dateMap.set(dateStr, { date: dateStr });
+                }
+                dateMap.get(dateStr).unemployment = point.value;
+              });
+            }
+            
+            // Add fed funds data
+            if (fedFundsSeries?.data) {
+              fedFundsSeries.data.forEach(point => {
+                const dateStr = point.date;
+                if (!dateMap.has(dateStr)) {
+                  dateMap.set(dateStr, { date: dateStr });
+                }
+                dateMap.get(dateStr).fedFunds = point.value;
+              });
+            }
+            
+            // Convert to array and sort by date
+            const combined = Array.from(dateMap.values()).sort((a, b) => 
+              new Date(a.date) - new Date(b.date)
+            );
+            
+            // Filter out entries with no data
+            return combined.filter(d => d.unemployment !== undefined || d.fedFunds !== undefined);
+          })()}
+          series={[
+            {
+              dataKey: 'unemployment',
+              name: 'Unemployment Rate (%)',
+              color: '#10b981',
+            },
+            {
+              dataKey: 'fedFunds',
+              name: 'Fed Funds Rate (%)',
+              color: '#f59e0b',
+            },
+          ]}
+          recessions={recessions}
+          title="Economic Indicators"
+          yAxisLabel="Rate (%)"
+          loading={loading}
+          height={450}
+        />
       </section>
 
       {/* Recession History */}
