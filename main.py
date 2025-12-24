@@ -290,6 +290,7 @@ async def get_historical_overview(
             'BAMLH0A0HYM2',  # High yield spread
             'BAMLC0A4CBBB',  # BBB spread
             'UNRATE',  # Unemployment
+            'FEDFUNDS', # Fed Funds Rate
             'USREC'  # Recession indicator
         ]
         
