@@ -75,9 +75,9 @@ const Dashboard = () => {
       {/* Header */}
       <header className="dashboard-header">
         <div>
-          <h1>Leveraged Loan Market Tracker</h1>
+          <h1>T'Smith; Loan and Financial Market Tracking</h1>
           <p className="subtitle">
-            Historical analysis from 1980s to present with recession indicators
+            Historical analysis from 1980s to present, Each graph represent a key data set that I believe are strong indicators and pre determinates of a recession
           </p>
         </div>
         <div className="header-actions">
@@ -186,47 +186,56 @@ const Dashboard = () => {
           height={450}
         />
 
-        {/* Combined Economic Indicators */}
-        <TimeSeriesChart
-          data={(() => {
-            const unemploymentData = getChartData('UNRATE');
-            const fedFundsData = getChartData('FEDFUNDS');
-            
-            // Merge the two datasets
-            const merged = new Map();
-            
-            unemploymentData.forEach(point => {
-              merged.set(point.date, { ...point, unemployment: point.value });
-            });
-            
-            fedFundsData.forEach(point => {
-              if (merged.has(point.date)) {
-                merged.get(point.date).fedFunds = point.value;
-              } else {
-                merged.set(point.date, { ...point, fedFunds: point.value });
-              }
-            });
-            
-            return Array.from(merged.values());
-          })()}
-          series={[
-            {
-              dataKey: 'unemployment',
-              name: 'Unemployment Rate (%)',
-              color: '#10b981',
-            },
-            {
-              dataKey: 'fedFunds',
-              name: 'Fed Funds Rate (%)',
-              color: '#f59e0b',
-            },
-          ]}
-          recessions={recessions}
-          title="Economic Indicators"
-          yAxisLabel="Rate (%)"
-          loading={loading}
-          height={450}
-        />
+         {/* Combined Economic Indicators */}
+<TimeSeriesChart
+  data={(() => {
+    const unemploymentData = getChartData('UNRATE');
+    const fedFundsData = getChartData('FEDFUNDS');
+    
+    // Create a map of all dates
+    const dateMap = new Map();
+    
+    // Add unemployment data
+    unemploymentData.forEach(point => {
+      const dateKey = point.date;
+      if (!dateMap.has(dateKey)) {
+        dateMap.set(dateKey, { date: dateKey });
+      }
+      dateMap.get(dateKey).unemployment = point.value;
+    });
+    
+    // Add fed funds data
+    fedFundsData.forEach(point => {
+      const dateKey = point.date;
+      if (!dateMap.has(dateKey)) {
+        dateMap.set(dateKey, { date: dateKey });
+      }
+      dateMap.get(dateKey).fedFunds = point.value;
+    });
+    
+    // Convert to array and sort
+    return Array.from(dateMap.values()).sort((a, b) => 
+      new Date(a.date) - new Date(b.date)
+    );
+  })()}
+  series={[
+    {
+      dataKey: 'unemployment',
+      name: 'Unemployment Rate (%)',
+      color: '#10b981',
+    },
+    {
+      dataKey: 'fedFunds',
+      name: 'Fed Funds Rate (%)',
+      color: '#f59e0b',
+    },
+  ]}
+  recessions={recessions}
+  title="Economic Indicators"
+  yAxisLabel="Rate (%)"
+  loading={loading}
+  height={450}
+/>
       </section>
 
       {/* Recession History */}
