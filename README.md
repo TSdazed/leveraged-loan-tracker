@@ -4,17 +4,14 @@ A comprehensive backend API for tracking the leveraged loan market with historic
 
 ## Features
 
-- 📊 **Historical Market Data** - Track leveraged loan metrics from 1980 to present
-- 🔴 **Recession Indicators** - NBER-defined recession periods for context
-- 📈 **Key Metrics**:
+**Historical Market Data** - Track leveraged loan metrics from 1980 to present
+**Recession Indicators** - NBER-defined recession periods for context
+**Key Metrics**:
   - Delinquency rates on business loans
   - Charge-off rates
   - High yield spreads
   - Corporate credit spreads
   - Economic indicators (GDP, unemployment, Fed funds rate)
-- 🔄 **Auto-updating** - Fetch latest data from FRED API
-- 🚀 **RESTful API** - Easy integration with frontend applications
-- 📦 **Docker Support** - One-command deployment
 
 ## Prerequisites
 
