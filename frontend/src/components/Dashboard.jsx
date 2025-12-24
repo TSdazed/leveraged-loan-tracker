@@ -75,9 +75,9 @@ const Dashboard = () => {
       {/* Header */}
       <header className="dashboard-header">
         <div>
-          <h1>T'Smith; Loan and Financial Market Tracking</h1>
+          <h1>T'Smith; Financial Markets and Loan Deliquency Tracking</h1>
           <p className="subtitle">
-            Historical analysis from 1980s to present, Each graph represent a key data set that I believe are strong indicators and pre determinates of a recession
+            Historical analysis from 1980s to present, Each graph depicts a key data set that I believe are strong indicators and pre determinates of a recession
           </p>
         </div>
         <div className="header-actions">
@@ -189,34 +189,43 @@ const Dashboard = () => {
          {/* Combined Economic Indicators */}
 <TimeSeriesChart
   data={(() => {
-    const unemploymentData = getChartData('UNRATE');
-    const fedFundsData = getChartData('FEDFUNDS');
+    const unemploymentSeries = historicalData?.UNRATE;
+    const fedFundsSeries = historicalData?.FEDFUNDS;
     
-    // Create a map of all dates
+    if (!unemploymentSeries?.data && !fedFundsSeries?.data) return [];
+    
+    // Create a map with all unique dates
     const dateMap = new Map();
     
     // Add unemployment data
-    unemploymentData.forEach(point => {
-      const dateKey = point.date;
-      if (!dateMap.has(dateKey)) {
-        dateMap.set(dateKey, { date: dateKey });
-      }
-      dateMap.get(dateKey).unemployment = point.value;
-    });
+    if (unemploymentSeries?.data) {
+      unemploymentSeries.data.forEach(point => {
+        const dateStr = point.date;
+        if (!dateMap.has(dateStr)) {
+          dateMap.set(dateStr, { date: dateStr });
+        }
+        dateMap.get(dateStr).unemployment = point.value;
+      });
+    }
     
     // Add fed funds data
-    fedFundsData.forEach(point => {
-      const dateKey = point.date;
-      if (!dateMap.has(dateKey)) {
-        dateMap.set(dateKey, { date: dateKey });
-      }
-      dateMap.get(dateKey).fedFunds = point.value;
-    });
+    if (fedFundsSeries?.data) {
+      fedFundsSeries.data.forEach(point => {
+        const dateStr = point.date;
+        if (!dateMap.has(dateStr)) {
+          dateMap.set(dateStr, { date: dateStr });
+        }
+        dateMap.get(dateStr).fedFunds = point.value;
+      });
+    }
     
-    // Convert to array and sort
-    return Array.from(dateMap.values()).sort((a, b) => 
+    // Convert to array and sort by date
+    const combined = Array.from(dateMap.values()).sort((a, b) => 
       new Date(a.date) - new Date(b.date)
     );
+    
+    // Filter out entries with no data
+    return combined.filter(d => d.unemployment !== undefined || d.fedFunds !== undefined);
   })()}
   series={[
     {

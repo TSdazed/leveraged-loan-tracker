@@ -1,16 +1,26 @@
 .chart-container {
-  background: white;
+  background: #1a1a1a;
   border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  border: 1px solid #374151;
   margin-bottom: 24px;
+}
+
+.dashboard.light-mode .chart-container {
+  background: white;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .chart-container h2 {
   margin: 0 0 24px 0;
   font-size: 20px;
   font-weight: 600;
+  color: #f1f5f9;
+}
+
+.dashboard.light-mode .chart-container h2 {
   color: #111827;
 }
 
@@ -24,28 +34,46 @@
 }
 
 .chart-container.empty p {
-  color: #6b7280;
+  color: #9ca3af;
   font-size: 16px;
 }
 
+.dashboard.light-mode .chart-container.empty p {
+  color: #6b7280;
+}
+
 .custom-tooltip {
-  background: white;
-  border: 1px solid #e5e7eb;
+  background: #1a1a1a;
+  border: 1px solid #374151;
   border-radius: 8px;
   padding: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard.light-mode .custom-tooltip {
+  background: white;
+  border: 1px solid #e5e7eb;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .tooltip-date {
   margin: 0 0 8px 0;
   font-weight: 600;
-  color: #111827;
+  color: #f1f5f9;
   font-size: 14px;
+}
+
+.dashboard.light-mode .tooltip-date {
+  color: #111827;
 }
 
 .tooltip-value {
   margin: 4px 0;
   font-size: 13px;
+  color: #e2e8f0;
+}
+
+.dashboard.light-mode .tooltip-value {
   color: #4b5563;
 }
 
