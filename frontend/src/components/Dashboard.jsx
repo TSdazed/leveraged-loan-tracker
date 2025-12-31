@@ -76,9 +76,9 @@ const Dashboard = () => {
       {/* Header */}
       <header className="dashboard-header">
         <div>
-          <h1>T'Smith Financial Markets & Loan Deliquency Tracking</h1>
+          <h1>T'Smith Financial Markets & Loan Delinquency Tracker</h1>
           <p className="subtitle">
-            Historical analysis from the 1980s to present. Each visualization represents a key dataset I believe are leading indicators of recessionary periods
+            Historical analysis from the 1980s to present. Each visualization represents a key dataset identified as a leading indicator of recessionary periods
           </p>
         </div>
         <div className="header-actions">
@@ -250,6 +250,23 @@ const Dashboard = () => {
           recessions={recessions}
           title="Economic Indicators"
           yAxisLabel="Rate (%)"
+          loading={loading}
+          height={450}
+        />
+
+        {/* Job Quits Rate Chart */}
+        <TimeSeriesChart
+          data={getChartData('JTSQUR')}
+          series={[
+            {
+              dataKey: 'value',
+              name: 'Job Quits Rate (%)',
+              color: '#ec4899',
+            },
+          ]}
+          recessions={recessions}
+          title="Private Sector Job Quits Rate"
+          yAxisLabel="Quits Rate (%)"
           loading={loading}
           height={450}
         />

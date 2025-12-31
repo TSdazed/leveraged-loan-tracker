@@ -33,6 +33,9 @@ class Settings(BaseSettings):
         "gdp": "GDP",  # Gross Domestic Product
         "unemployment": "UNRATE",  # Unemployment Rate
         "fed_funds": "FEDFUNDS",  # Federal Funds Effective Rate
+
+        # Labor Market
+        "job_quits": "JTSQUR", # Job Quits total private
         
         # NBER Recession Indicator
         "recession": "USREC",  # NBER based Recession Indicators for the United States

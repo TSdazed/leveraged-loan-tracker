@@ -291,6 +291,7 @@ async def get_historical_overview(
             'BAMLC0A4CBBB',  # BBB spread
             'UNRATE',  # Unemployment
             'FEDFUNDS', # Fed Funds Rate
+            'JTSQUR', # Job Quits
             'USREC'  # Recession indicator
         ]
         
