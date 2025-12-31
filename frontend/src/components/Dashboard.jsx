@@ -76,9 +76,9 @@ const Dashboard = () => {
       {/* Header */}
       <header className="dashboard-header">
         <div>
-          <h1>T'Smith; Financial Markets and Loan Deliquency Tracking</h1>
+          <h1>T'Smith Financial Markets & Loan Deliquency Tracking</h1>
           <p className="subtitle">
-            Historical analysis from 1980s to present, Each graph depicts a key data set that I believe are strong indicators and pre determinates of a recession
+            Historical analysis from the 1980s to present. Each visualization represents a key dataset I believe are leading indicators of recessionary periods
           </p>
         </div>
         <div className="header-actions">
